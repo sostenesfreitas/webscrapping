@@ -1,14 +1,25 @@
 let restify = require('restify');
-let item = require('./index2');
-
+let get = require('./scrap-cheerio');
+// 'carnes-aves-e-peixes/carnes-bovinas'
 respond = async (req, res, next) => {
-  item
-    .then(a => {
-      res.send(a);
+  Promise.all([
+    get.t('bebidas/cervejas/Lata'),
+    get.t('carnes-aves-e-peixes/carnes-bovinas')
+  ])
+    .then(t => {
+      res.send({ cervejas: t[0], carnes: t[1] });
     })
     .catch(err => {
       console.log(err);
     });
+  // get
+  //   .t('bebidas/cervejas/Lata')
+  //   .then(a => {
+  //     res.send(a);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
   next();
 };
 
@@ -26,8 +37,7 @@ server.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
-server.get('/hello/', respond);
-server.head('/hello/', respond);
+server.get('/carnes/', respond);
 
 server.listen(8080, function() {
   console.log('%s listening at %s', server.name, server.url);

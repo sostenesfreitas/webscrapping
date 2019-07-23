@@ -1,4 +1,4 @@
-const puppeteerInfiniteScroll = require('./node_modules/puppeteer-infinite-scroll/src/puppeter-infinite-scroll');
+const puppeteerInfiniteScroll = require('puppeteer-infinite-scroll/src/puppeter-infinite-scroll');
 const skel = require('./skel');
 let t = async () => {
   const browser = new puppeteerInfiniteScroll();
